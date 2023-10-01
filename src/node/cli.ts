@@ -13,7 +13,6 @@ cli
   .command("[root]", "start dev server")
   .alias("dev")
   .action(async (root: string) => {
-    // 添加以下逻辑
     root = root ? path.resolve(root) : process.cwd();
     const server = await createDevServer(root);
     await server.listen();
