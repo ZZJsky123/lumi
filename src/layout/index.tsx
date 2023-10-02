@@ -1,13 +1,11 @@
 import { useState } from "react";
 
-import viteSvgSrc from "../../public/vite.svg";
 import "./global.css";
+import viteSvgSrc from "../../public/vite.svg";
 import styles from "./index.module.css";
 
 export function Layout() {
   const [count, setCount] = useState(0);
-
-  console.log("ViteSvg", viteSvgSrc);
 
   return (
     <div className="layout-background">

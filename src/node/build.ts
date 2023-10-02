@@ -33,10 +33,10 @@ export async function bundle(root: string) {
       viteBuild(resolveViteConfig(true)),
     ]);
 
-    console.log(`clientBundle`, clientBundle, " serverBundle", serverBundle);
+    // console.log(`clientBundle`, clientBundle, " serverBundle", serverBundle);
     return [clientBundle, serverBundle] as [RollupOutput, RollupOutput];
   } catch (e) {
-    console.log(e);
+    console.log("error:", e);
   }
 }
 
@@ -48,6 +48,10 @@ export async function renderPage(
   const clientChunk = clientBundle.output.find(
     (chunk) => chunk.type === "chunk" && chunk.isEntry
   );
+  const clientCssChunk = clientBundle.output.find((chunk) => {
+    return chunk.type === "asset" && /\.css$/.test(chunk.fileName);
+  });
+  console.log("clientCssChunk", clientCssChunk);
   console.log(`Rendering page in server side...`);
   const appHtml = render();
   const html = `
@@ -58,10 +62,11 @@ export async function renderPage(
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>title</title>
     <meta name="description" content="xxx">
+    <script type="module" src="/${clientChunk?.fileName}"></script>
+    <link rel="stylesheet" type="text/css" href="/${clientCssChunk?.fileName}"></link>
   </head>
   <body>
     <div id="root">${appHtml}</div>
-    <script type="module" src="/${clientChunk?.fileName}"></script>
   </body>
 </html>`.trim();
   await fs.ensureDir(join(root, "build"));
