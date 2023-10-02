@@ -4,6 +4,7 @@ import { resolve } from "path";
 import { build } from "./build";
 import { createDevServer } from "./dev";
 import Creator from "./download";
+import * as fs from "fs-extra";
 
 const version = require("../../package.json").version;
 
@@ -35,6 +36,10 @@ cli
 cli.command("create <projectName>").action(async (projectName) => {
   const workdir = process.cwd();
   const targetDir = path.join(workdir, projectName);
+  if (fs.existsSync(targetDir)) {
+    console.log("目标文件以及存在，强制删除中...");
+    await fs.remove(targetDir);
+  }
   const creator = new Creator(projectName, targetDir);
   await creator.create();
 });
