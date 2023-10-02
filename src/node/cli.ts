@@ -3,6 +3,7 @@ import path = require("path");
 import { resolve } from "path";
 import { build } from "./build";
 import { createDevServer } from "./dev";
+import Creator from "./download";
 
 const version = require("../../package.json").version;
 
@@ -30,5 +31,12 @@ cli
       console.log(e);
     }
   });
+
+cli.command("create <projectName>").action(async (projectName) => {
+  const workdir = process.cwd();
+  const targetDir = path.join(workdir, projectName);
+  const creator = new Creator(projectName, targetDir);
+  await creator.create();
+});
 
 cli.parse();
