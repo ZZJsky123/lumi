@@ -1,4 +1,4 @@
-const downloadGitRepo = require("download-git-repo");
+import * as downloadGitRepo from "download-git-repo";
 import { promisify } from "util";
 import { dynamicImport } from "../utils/common";
 

@@ -16,6 +16,7 @@ cli
   .alias("dev")
   .action(async (root: string) => {
     root = root ? path.resolve(root) : process.cwd();
+    console.log("root", root);
     const server = await createDevServer(root);
     await server.listen();
     server.printUrls();

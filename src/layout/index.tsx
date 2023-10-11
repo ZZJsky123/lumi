@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-import "./global.css";
 import viteSvgSrc from "../../public/vite.svg";
+import "./global.css";
 import styles from "./index.module.css";
+import styleLess from "./test.module.less";
 
 export function Layout() {
   const [count, setCount] = useState(0);
@@ -15,6 +16,7 @@ export function Layout() {
         {count}
         <button onClick={() => setCount(count + 1)}>Add Count</button>
       </div>
+      <div className={styleLess["layout-content"]}>content</div>
     </div>
   );
 }
